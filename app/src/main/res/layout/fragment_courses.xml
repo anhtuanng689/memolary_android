@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.courses.view.CoursesFragment"
+    tools:context=".ui.home.courses.view.CoursesFragment"
     android:id="@+id/fragment_courses"
-    >
+    android:paddingLeft="@dimen/fragment_horizontal_margin"
+    android:paddingTop="@dimen/fragment_vertical_margin"
+    android:paddingRight="@dimen/fragment_horizontal_margin">
 
     <TextView
         android:gravity="center"

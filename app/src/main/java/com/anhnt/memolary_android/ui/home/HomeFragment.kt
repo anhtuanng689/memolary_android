@@ -1,4 +1,4 @@
-package com.anhnt.memolary_android.ui.home.view
+package com.anhnt.memolary_android.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.anhnt.memolary_android.MainActivity
 import com.anhnt.memolary_android.databinding.FragmentHomeBinding
-import com.anhnt.memolary_android.ui.home.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var navController: NavController
-
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
 
     private lateinit var viewModel: HomeViewModel
 

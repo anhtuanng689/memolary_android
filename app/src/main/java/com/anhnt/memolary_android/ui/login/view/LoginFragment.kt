@@ -3,7 +3,6 @@ package com.anhnt.memolary_android.ui.login.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,18 +34,16 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.e("CreateView", "LoginFragment")
         super.onViewCreated(view, savedInstanceState)
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password
@@ -75,7 +72,6 @@ class LoginFragment : Fragment() {
                     showLoginFailed(it)
                 }
                 loginResult.success?.let {
-
                     showLoginSuccess()
                     val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                     findNavController().navigate(action)
@@ -144,6 +140,5 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        Log.e("DestroyView", "LoginFragment")
     }
 }

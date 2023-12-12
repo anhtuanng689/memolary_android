@@ -2,6 +2,7 @@ package com.anhnt.memolary_android.data.login.source
 
 import com.anhnt.memolary_android.data.Result
 import com.anhnt.memolary_android.data.login.model.LoginResponse
+import com.anhnt.memolary_android.util.AppPreferences
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -9,22 +10,20 @@ import com.anhnt.memolary_android.data.login.model.LoginResponse
  */
 
 class LoginRepository(val dataSource: LoginDataSource) {
+    var accessToken: String? = AppPreferences.accessToken
 
-    // in-memory cache of the loggedInUser object
-    var accessToken: String? = null
-        private set
+    var isLoggedIn: Boolean? = AppPreferences.isLoggedIn
 
-    val isLoggedIn: Boolean
-        get() = accessToken != null
 
     init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-        accessToken = null
+
     }
 
     fun logout() {
         accessToken = null
+        isLoggedIn = null
+        AppPreferences.accessToken = null
+        AppPreferences.isLoggedIn = null
         dataSource.logout()
     }
 
@@ -40,8 +39,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     private fun setLoggedInUser(loginResponse: LoginResponse) {
-        this.accessToken = loginResponse.accessToken
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
+        AppPreferences.accessToken = loginResponse.accessToken
+        AppPreferences.isLoggedIn = true
     }
 }

@@ -9,6 +9,7 @@ import com.anhnt.memolary_android.data.Result
 import com.anhnt.memolary_android.data.login.source.LoginRepository
 import com.anhnt.memolary_android.ui.login.LoginFormState
 import com.anhnt.memolary_android.ui.login.LoginResult
+import com.anhnt.memolary_android.ui.login.Token
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
@@ -23,9 +24,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         val result = loginRepository.login(username, password)
 
         if (result is Result.Success) {
-            
             _loginResult.postValue(
-                LoginResult(success = true)
+                LoginResult(success = Token(result.data.accessToken))
             )
         } else {
             _loginResult.postValue(LoginResult(error = R.string.login_failed))

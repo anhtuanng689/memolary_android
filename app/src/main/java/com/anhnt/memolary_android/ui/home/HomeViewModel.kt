@@ -1,4 +1,4 @@
-package com.anhnt.memolary_android.ui.home.viewmodel
+package com.anhnt.memolary_android.ui.home
 
 import androidx.lifecycle.ViewModel
 
