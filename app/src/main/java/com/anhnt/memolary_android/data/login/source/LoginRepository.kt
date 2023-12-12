@@ -1,7 +1,7 @@
 package com.anhnt.memolary_android.data.login.source
 
 import com.anhnt.memolary_android.data.Result
-import com.anhnt.memolary_android.data.login.model.LoggedInUser
+import com.anhnt.memolary_android.data.login.model.LoginResponse
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -11,24 +11,24 @@ import com.anhnt.memolary_android.data.login.model.LoggedInUser
 class LoginRepository(val dataSource: LoginDataSource) {
 
     // in-memory cache of the loggedInUser object
-    var user: LoggedInUser? = null
+    var accessToken: String? = null
         private set
 
     val isLoggedIn: Boolean
-        get() = user != null
+        get() = accessToken != null
 
     init {
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-        user = null
+        accessToken = null
     }
 
     fun logout() {
-        user = null
+        accessToken = null
         dataSource.logout()
     }
 
-    suspend fun login(username: String, password: String): Result<LoggedInUser> {
+    suspend fun login(username: String, password: String): Result<LoginResponse> {
         // handle login
         val result = dataSource.login(username, password)
 
@@ -39,8 +39,8 @@ class LoginRepository(val dataSource: LoginDataSource) {
         return result
     }
 
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        this.user = loggedInUser
+    private fun setLoggedInUser(loginResponse: LoginResponse) {
+        this.accessToken = loginResponse.accessToken
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
     }

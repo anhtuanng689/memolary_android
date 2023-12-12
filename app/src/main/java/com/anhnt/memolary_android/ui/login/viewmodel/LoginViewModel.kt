@@ -1,13 +1,12 @@
 package com.anhnt.memolary_android.ui.login.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
-import com.anhnt.memolary_android.data.login.source.LoginRepository
-import com.anhnt.memolary_android.data.Result
-
 import com.anhnt.memolary_android.R
+import com.anhnt.memolary_android.data.Result
+import com.anhnt.memolary_android.data.login.source.LoginRepository
 import com.anhnt.memolary_android.ui.login.LoginFormState
 import com.anhnt.memolary_android.ui.login.LoginResult
 
@@ -24,8 +23,10 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         val result = loginRepository.login(username, password)
 
         if (result is Result.Success) {
+            
             _loginResult.postValue(
-                LoginResult(success = true))
+                LoginResult(success = true)
+            )
         } else {
             _loginResult.postValue(LoginResult(error = R.string.login_failed))
         }

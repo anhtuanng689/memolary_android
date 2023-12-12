@@ -1,29 +1,30 @@
 package com.anhnt.memolary_android.ui.login.view
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.anhnt.memolary_android.databinding.FragmentLoginBinding
-
-import com.anhnt.memolary_android.R
 import com.anhnt.memolary_android.ui.login.viewmodel.LoginViewModel
 import com.anhnt.memolary_android.ui.login.viewmodel.LoginViewModelFactory
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,7 +42,9 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.e("CreateView", "LoginFragment")
         super.onViewCreated(view, savedInstanceState)
+
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
@@ -72,7 +75,10 @@ class LoginFragment : Fragment() {
                     showLoginFailed(it)
                 }
                 loginResult.success?.let {
-//                    updateUiWithUser(it)
+
+                    showLoginSuccess()
+                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                    findNavController().navigate(action)
                 }
             })
 
@@ -96,7 +102,7 @@ class LoginFragment : Fragment() {
         passwordEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                GlobalScope.launch {
+                lifecycleScope.launchWhenResumed {
                     loginViewModel.login(
                         usernameEditText.text.toString(),
                         passwordEditText.text.toString()
@@ -108,7 +114,7 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            GlobalScope.launch {
+            lifecycleScope.launchWhenResumed {
                 loginViewModel.login(
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
@@ -116,6 +122,7 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
 
 //    private fun updateUiWithUser(model: LoggedInUserView) {
 //        val welcome = getString(R.string.welcome) + model.displayName
@@ -126,11 +133,17 @@ class LoginFragment : Fragment() {
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
+        Toast.makeText(appContext, errorString, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoginSuccess() {
+        val appContext = context?.applicationContext ?: return
+        Toast.makeText(appContext, "Login successfully", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Log.e("DestroyView", "LoginFragment")
     }
 }

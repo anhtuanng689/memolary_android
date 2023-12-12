@@ -2,8 +2,8 @@ package com.anhnt.memolary_android.data.login.source
 
 import android.util.Log
 import com.anhnt.memolary_android.data.Result
-import com.anhnt.memolary_android.data.login.model.LoggedInUser
 import com.anhnt.memolary_android.data.login.model.LoginRequest
+import com.anhnt.memolary_android.data.login.model.LoginResponse
 import com.anhnt.memolary_android.network.ApiService
 import com.anhnt.memolary_android.network.RestClient
 import kotlinx.coroutines.CoroutineScope
@@ -21,12 +21,12 @@ import java.util.UUID
 
 interface LoginService : ApiService {
     @POST("/auth/login")
-    suspend fun login(@Body loginRequest: LoginRequest): LoggedInUser
+    suspend fun login(@Body loginRequest: LoginRequest): LoginResponse
 }
 
 class LoginDataSource (val loginService: LoginService) {
 
-   suspend fun login(username: String, password: String): Result<LoggedInUser> {
+   suspend fun login(username: String, password: String): Result<LoginResponse> {
        return try {
            val user = loginService.login(LoginRequest(username, password))
            Result.Success(user)

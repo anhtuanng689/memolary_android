@@ -1,15 +1,19 @@
 package com.anhnt.memolary_android.ui.home.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.anhnt.memolary_android.R
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import com.anhnt.memolary_android.MainActivity
+import com.anhnt.memolary_android.databinding.FragmentHomeBinding
 import com.anhnt.memolary_android.ui.home.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var navController: NavController
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -17,17 +21,20 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater)
+        navController = findNavController()
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onStart() {
+        val mainActivity: MainActivity = activity as MainActivity
+        mainActivity.setUpCourses()
+        super.onStart()
     }
 
 }
