@@ -1,10 +1,10 @@
-package com.anhnt.memolary_android.ui.login.viewmodel
+package com.anhnt.memolary_android.ui.auth.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.anhnt.memolary_android.data.login.source.LoginDataSource
-import com.anhnt.memolary_android.data.login.source.LoginRepository
-import com.anhnt.memolary_android.data.login.source.LoginService
+import com.anhnt.memolary_android.data.auth.source.AuthDataSource
+import com.anhnt.memolary_android.data.auth.source.AuthRepository
+import com.anhnt.memolary_android.data.auth.source.AuthService
 import com.anhnt.memolary_android.network.RestClient
 
 /**
@@ -17,9 +17,9 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
-                loginRepository = LoginRepository(
-                    dataSource = LoginDataSource(
-                        loginService = RestClient.getApiService(LoginService::class.java)
+                authRepository = AuthRepository(
+                    dataSource = AuthDataSource(
+                        authService = RestClient.getApiService(AuthService::class.java)
                     )
                 )
             ) as T

@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     init {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchWhenResumed {
             if (AppPreferences.isLoggedIn == true) {
                 navController.navigate(R.id.homeFragment)
             } else {
@@ -97,7 +97,12 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(CoursesFragment())
     }
 
+    private fun resetBottomNavSelectedItemId() {
+        bottomNavigationView.selectedItemId = R.id.courses_nav
+    }
+
     fun logout() {
+        resetBottomNavSelectedItemId()
         navController.navigate(R.id.loginFragment)
     }
 

@@ -1,4 +1,4 @@
-package com.anhnt.memolary_android.ui.login.view
+package com.anhnt.memolary_android.ui.auth.login.view
 
 import android.os.Bundle
 import android.text.Editable
@@ -15,26 +15,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.anhnt.memolary_android.databinding.FragmentLoginBinding
-import com.anhnt.memolary_android.ui.login.viewmodel.LoginViewModel
-import com.anhnt.memolary_android.ui.login.viewmodel.LoginViewModelFactory
+import com.anhnt.memolary_android.ui.auth.login.viewmodel.LoginViewModel
+import com.anhnt.memolary_android.ui.auth.login.viewmodel.LoginViewModelFactory
+import kotlinx.coroutines.launch
 
 
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
-    private var _binding: FragmentLoginBinding? = null
-
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater)
         return binding.root
 
     }
@@ -73,7 +69,8 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     showLoginSuccess()
-                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+                    val action =
+                        LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                     findNavController().navigate(action)
                 }
             })
@@ -98,7 +95,7 @@ class LoginFragment : Fragment() {
         passwordEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                lifecycleScope.launchWhenResumed {
+                lifecycleScope.launch {
                     loginViewModel.login(
                         usernameEditText.text.toString(),
                         passwordEditText.text.toString()
@@ -110,7 +107,7 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            lifecycleScope.launchWhenResumed {
+            lifecycleScope.launch {
                 loginViewModel.login(
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
@@ -118,14 +115,6 @@ class LoginFragment : Fragment() {
             }
         }
     }
-
-
-//    private fun updateUiWithUser(model: LoggedInUserView) {
-//        val welcome = getString(R.string.welcome) + model.displayName
-//        // TODO : initiate successful logged in experience
-//        val appContext = context?.applicationContext ?: return
-//        Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
-//    }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
@@ -135,10 +124,5 @@ class LoginFragment : Fragment() {
     private fun showLoginSuccess() {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, "Login successfully", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

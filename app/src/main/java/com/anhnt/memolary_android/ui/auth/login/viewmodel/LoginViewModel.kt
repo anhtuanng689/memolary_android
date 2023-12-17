@@ -1,4 +1,4 @@
-package com.anhnt.memolary_android.ui.login.viewmodel
+package com.anhnt.memolary_android.ui.auth.login.viewmodel
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.anhnt.memolary_android.R
 import com.anhnt.memolary_android.data.Result
-import com.anhnt.memolary_android.data.login.source.LoginRepository
-import com.anhnt.memolary_android.ui.login.LoginFormState
-import com.anhnt.memolary_android.ui.login.LoginResult
-import com.anhnt.memolary_android.ui.login.Token
+import com.anhnt.memolary_android.data.auth.source.AuthRepository
+import com.anhnt.memolary_android.ui.auth.login.LoginFormState
+import com.anhnt.memolary_android.ui.auth.login.LoginResult
+import com.anhnt.memolary_android.ui.auth.login.Token
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -21,7 +21,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     suspend fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+        val result = authRepository.login(username, password)
 
         if (result is Result.Success) {
             _loginResult.postValue(

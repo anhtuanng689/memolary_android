@@ -1,7 +1,8 @@
-package com.anhnt.memolary_android.data.login.source
+package com.anhnt.memolary_android.data.auth.source
 
 import com.anhnt.memolary_android.data.Result
-import com.anhnt.memolary_android.data.login.model.LoginResponse
+import com.anhnt.memolary_android.data.auth.model.LoginResponse
+import com.anhnt.memolary_android.network.RestClient
 import com.anhnt.memolary_android.util.AppPreferences
 
 /**
@@ -9,26 +10,17 @@ import com.anhnt.memolary_android.util.AppPreferences
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: LoginDataSource) {
-    var accessToken: String? = AppPreferences.accessToken
+class AuthRepository(val dataSource: AuthDataSource) {
 
-    var isLoggedIn: Boolean? = AppPreferences.isLoggedIn
-
-
-    init {
-
-    }
 
     fun logout() {
-        accessToken = null
-        isLoggedIn = null
         AppPreferences.accessToken = null
         AppPreferences.isLoggedIn = null
+        RestClient.clearBearToken()
         dataSource.logout()
     }
 
     suspend fun login(username: String, password: String): Result<LoginResponse> {
-        // handle login
         val result = dataSource.login(username, password)
 
         if (result is Result.Success) {
@@ -39,6 +31,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
     }
 
     private fun setLoggedInUser(loginResponse: LoginResponse) {
+        RestClient.setBearToken(loginResponse.accessToken)
         AppPreferences.accessToken = loginResponse.accessToken
         AppPreferences.isLoggedIn = true
     }

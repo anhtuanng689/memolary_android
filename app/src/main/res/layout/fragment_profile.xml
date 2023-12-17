@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.view.ProfileFragment"
+    tools:context=".ui.home.profile.view.ProfileFragment"
     android:id="@+id/fragment_profile"
     android:paddingLeft="@dimen/fragment_horizontal_margin"
     android:paddingTop="@dimen/fragment_vertical_margin"
@@ -15,6 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Log out" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
 
 </FrameLayout>

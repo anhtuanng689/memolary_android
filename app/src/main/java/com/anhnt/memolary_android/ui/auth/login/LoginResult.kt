@@ -1,4 +1,4 @@
-package com.anhnt.memolary_android.ui.login
+package com.anhnt.memolary_android.ui.auth.login
 
 /**
  * Authentication result : success (user details) or error message.

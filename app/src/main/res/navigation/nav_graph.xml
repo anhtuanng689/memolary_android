@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.anhnt.memolary_android.ui.login.view.LoginFragment"
+        android:name="com.anhnt.memolary_android.ui.auth.login.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -26,6 +26,7 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/coursesFragment"
@@ -34,11 +35,12 @@
         tools:layout="@layout/fragment_courses" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.anhnt.memolary_android.ui.profile.view.ProfileFragment"
+        android:name="com.anhnt.memolary_android.ui.home.profile.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
 </navigation>
