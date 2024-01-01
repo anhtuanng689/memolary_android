@@ -79,5 +79,7 @@ dependencies {
     // Saved state module for ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
+    implementation("com.github.bumptech.glide:glide:4.14.2")  // Replace with the latest Glide version
+//    kapt("com.github.bumptech.glide:compiler:4.14.2")
 
 }

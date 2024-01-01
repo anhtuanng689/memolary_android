@@ -5,10 +5,9 @@
     android:id="@+id/login_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/fragment_horizontal_margin"
-    android:paddingTop="@dimen/fragment_vertical_margin"
-    android:paddingRight="@dimen/fragment_horizontal_margin"
-    android:paddingBottom="@dimen/fragment_vertical_margin"
+    android:paddingLeft="@dimen/normal"
+    android:paddingTop="@dimen/normal"
+    android:paddingRight="@dimen/normal"
     tools:context=".ui.auth.login.view.LoginFragment">
 
     <EditText

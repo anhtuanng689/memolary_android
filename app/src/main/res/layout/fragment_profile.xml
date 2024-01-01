@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.profile.view.ProfileFragment"
     android:id="@+id/fragment_profile"
-    android:paddingLeft="@dimen/fragment_horizontal_margin"
-    android:paddingTop="@dimen/fragment_vertical_margin"
-    android:paddingRight="@dimen/fragment_horizontal_margin">
+    android:paddingLeft="@dimen/normal"
+    android:paddingTop="@dimen/normal"
+    android:paddingRight="@dimen/normal">
 
     <Button
         android:id="@+id/logout_btn"

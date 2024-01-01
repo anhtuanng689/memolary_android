@@ -3,11 +3,11 @@ package com.anhnt.memolary_android.data.course.source
 import com.anhnt.memolary_android.data.Result
 import com.anhnt.memolary_android.data.course.model.MyCoursesResponse
 import com.anhnt.memolary_android.network.ApiService
-import retrofit2.http.POST
+import retrofit2.http.GET
 import java.io.IOException
 
 interface CourseService : ApiService {
-    @POST("/courses")
+    @GET("/courses")
     suspend fun getMyCourses(): MyCoursesResponse
 }
 

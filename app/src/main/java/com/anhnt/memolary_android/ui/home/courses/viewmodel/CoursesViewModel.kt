@@ -19,10 +19,15 @@ class CoursesViewModel(
     suspend fun getMyCourses() {
         val result = courseRepository.getMyCourses()
         if (result is Result.Success) {
-
+            val myCoursesResult = result.data.data
+            _myCoursesResult.postValue(
+                MyCoursesResult(
+                    success = myCoursesResult
+                )
+            )
 
         } else {
-            _myCoursesResult.postValue(MyCoursesResult(error = R.string.login_failed))
+            _myCoursesResult.postValue(MyCoursesResult(error = R.string.get_my_courses_failed))
         }
     }
 
